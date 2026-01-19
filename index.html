@@ -1,0 +1,1487 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>思 - 智慧成长，一站抵达</title>
+
+<style>
+
+/* ==================== 全局样式 ==================== */
+
+* {
+
+margin: 0;
+
+padding: 0;
+
+box-sizing: border-box;
+
+}
+
+body {
+
+font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+
+background: #0a0e27;
+
+color: #ffffff;
+
+overflow-x: hidden;
+
+min-height: 100vh;
+
+}
+
+
+/* ==================== 星空背景 ==================== */
+
+.starfield {
+
+position: fixed;
+
+top: 0;
+
+left: 0;
+
+width: 100%;
+
+height: 100%;
+
+z-index: 0;
+
+background: linear-gradient(to bottom, #0a0e27 0%, #1a1f3a 50%, #0f1428 100%);
+
+}
+
+.star {
+
+position: absolute;
+
+background: white;
+
+border-radius: 50%;
+
+animation: twinkle linear infinite;
+
+}
+
+@keyframes twinkle {
+
+0%, 100% { opacity: 0.3; }
+
+50% { opacity: 1; }
+
+}
+
+
+/* ==================== 导航栏 ==================== */
+
+.navbar {
+
+position: fixed;
+
+top: 0;
+
+left: 0;
+
+right: 0;
+
+height: 70px;
+
+background: rgba(10, 14, 39, 0.8);
+
+backdrop-filter: blur(10px);
+
+border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+display: flex;
+
+justify-content: space-between;
+
+align-items: center;
+
+padding: 0 40px;
+
+z-index: 1000;
+
+}
+
+.logo {
+
+font-size: 32px;
+
+font-weight: 700;
+
+background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+-webkit-background-clip: text;
+
+-webkit-text-fill-color: transparent;
+
+background-clip: text;
+
+letter-spacing: 2px;
+
+}
+
+.user-menu {
+
+position: relative;
+
+}
+
+.user-avatar {
+
+width: 45px;
+
+height: 45px;
+
+border-radius: 50%;
+
+background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+display: flex;
+
+align-items: center;
+
+justify-content: center;
+
+cursor: pointer;
+
+transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+border: 2px solid rgba(255, 255, 255, 0.2);
+
+}
+
+.user-avatar:hover {
+
+transform: scale(1.1);
+
+box-shadow: 0 0 20px rgba(102, 126, 234, 0.6);
+
+}
+
+.user-avatar svg {
+
+width: 24px;
+
+height: 24px;
+
+fill: white;
+
+}
+
+
+/* ==================== 下拉菜单 ==================== */
+
+.dropdown {
+
+position: absolute;
+
+top: 60px;
+
+right: 0;
+
+background: rgba(26, 31, 58, 0.95);
+
+backdrop-filter: blur(20px);
+
+border-radius: 12px;
+
+min-width: 200px;
+
+box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+
+opacity: 0;
+
+visibility: hidden;
+
+transform: translateY(-10px);
+
+transition: all 0.3s ease;
+
+border: 1px solid rgba(255, 255, 255, 0.1);
+
+}
+
+.dropdown.active {
+
+opacity: 1;
+
+visibility: visible;
+
+transform: translateY(0);
+
+}
+
+.dropdown-item {
+
+padding: 15px 20px;
+
+cursor: pointer;
+
+transition: all 0.3s ease;
+
+border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+display: flex;
+
+align-items: center;
+
+gap: 10px;
+
+}
+
+.dropdown-item:last-child {
+
+border-bottom: none;
+
+}
+
+.dropdown-item:hover {
+
+background: rgba(102, 126, 234, 0.2);
+
+padding-left: 25px;
+
+}
+
+.settings-menu {
+
+position: absolute;
+
+top: 60px;
+
+right: 0;
+
+background: rgba(26, 31, 58, 0.95);
+
+backdrop-filter: blur(20px);
+
+border-radius: 12px;
+
+min-width: 180px;
+
+box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+
+opacity: 0;
+
+visibility: hidden;
+
+transform: translateY(-10px);
+
+transition: all 0.3s ease;
+
+border: 1px solid rgba(255, 255, 255, 0.1);
+
+}
+
+.settings-menu.active {
+
+opacity: 1;
+
+visibility: visible;
+
+transform: translateY(0);
+
+}
+
+.settings-item {
+
+padding: 12px 20px;
+
+cursor: pointer;
+
+transition: all 0.3s ease;
+
+border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+}
+
+.settings-item:last-child {
+
+border-bottom: none;
+
+}
+
+.settings-item:hover {
+
+background: rgba(102, 126, 234, 0.2);
+
+padding-left: 25px;
+
+}
+
+.settings-item.active {
+
+background: rgba(102, 126, 234, 0.3);
+
+color: #667eea;
+
+}
+
+
+/* ==================== 主容器 ==================== */
+
+.container {
+
+position: relative;
+
+z-index: 1;
+
+padding-top: 70px;
+
+min-height: 100vh;
+
+}
+
+
+/* ==================== 简介界面 ==================== */
+
+.intro-section {
+
+display: flex;
+
+flex-direction: column;
+
+align-items: center;
+
+justify-content: center;
+
+min-height: calc(100vh - 70px);
+
+padding: 60px 20px;
+
+opacity: 1;
+
+transition: opacity 0.5s ease;
+
+}
+
+.intro-section.hidden {
+
+display: none;
+
+opacity: 0;
+
+}
+
+.intro-content {
+
+max-width: 900px;
+
+text-align: center;
+
+animation: fadeInUp 1s ease;
+
+}
+
+@keyframes fadeInUp {
+
+from { opacity: 0; transform: translateY(30px); }
+
+to { opacity: 1; transform: translateY(0); }
+
+}
+
+.intro-title {
+
+font-size: 48px;
+
+font-weight: 700;
+
+margin-bottom: 30px;
+
+background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+-webkit-background-clip: text;
+
+-webkit-text-fill-color: transparent;
+
+background-clip: text;
+
+line-height: 1.3;
+
+}
+
+.intro-subtitle {
+
+font-size: 24px;
+
+color: #a0aec0;
+
+margin-bottom: 40px;
+
+font-weight: 300;
+
+}
+
+.intro-text {
+
+font-size: 18px;
+
+line-height: 2;
+
+color: #cbd5e0;
+
+margin-bottom: 25px;
+
+text-align: justify;
+
+text-indent: 2em;
+
+}
+
+.cta-button {
+
+margin-top: 40px;
+
+padding: 18px 50px;
+
+font-size: 18px;
+
+background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+border: none;
+
+border-radius: 50px;
+
+color: white;
+
+cursor: pointer;
+
+transition: all 0.3s ease;
+
+box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+
+}
+
+.cta-button:hover {
+
+transform: translateY(-3px);
+
+box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
+
+}
+
+
+/* ==================== 视频列表界面 ==================== */
+
+.video-section {
+
+display: none;
+
+padding: 60px 20px;
+
+opacity: 0;
+
+transition: opacity 0.5s ease;
+
+}
+
+.video-section.active {
+
+display: block;
+
+opacity: 1;
+
+animation: fadeIn 0.5s ease;
+
+}
+
+@keyframes fadeIn {
+
+from { opacity: 0; }
+
+to { opacity: 1; }
+
+}
+
+.video-grid {
+
+max-width: 1400px;
+
+margin: 0 auto;
+
+display: grid;
+
+grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+
+gap: 30px;
+
+padding: 20px;
+
+}
+
+.video-card {
+
+background: rgba(26, 31, 58, 0.6);
+
+backdrop-filter: blur(10px);
+
+border-radius: 16px;
+
+overflow: hidden;
+
+cursor: pointer;
+
+transition: all 0.4s ease;
+
+border: 1px solid rgba(255, 255, 255, 0.1);
+
+position: relative;
+
+}
+
+.video-card:hover {
+
+transform: translateY(-10px);
+
+box-shadow: 0 20px 50px rgba(102, 126, 234, 0.4);
+
+border-color: rgba(102, 126, 234, 0.5);
+
+}
+
+.video-thumbnail {
+
+width: 100%;
+
+height: 200px;
+
+background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+display: flex;
+
+align-items: center;
+
+justify-content: center;
+
+position: relative;
+
+overflow: hidden;
+
+}
+
+.video-thumbnail::before {
+
+content: '';
+
+position: absolute;
+
+width: 100%;
+
+height: 100%;
+
+background: rgba(0, 0, 0, 0.3);
+
+transition: all 0.3s ease;
+
+}
+
+.video-card:hover .video-thumbnail::before {
+
+background: rgba(0, 0, 0, 0.1);
+
+}
+
+.play-icon {
+
+width: 60px;
+
+height: 60px;
+
+background: rgba(255, 255, 255, 0.9);
+
+border-radius: 50%;
+
+display: flex;
+
+align-items: center;
+
+justify-content: center;
+
+z-index: 1;
+
+transition: all 0.3s ease;
+
+}
+
+.video-card:hover .play-icon {
+
+transform: scale(1.2);
+
+background: white;
+
+}
+
+.play-icon::after {
+
+content: '';
+
+width: 0;
+
+height: 0;
+
+border-left: 20px solid #667eea;
+
+border-top: 12px solid transparent;
+
+border-bottom: 12px solid transparent;
+
+margin-left: 5px;
+
+}
+
+.video-info {
+
+padding: 20px;
+
+}
+
+.video-title {
+
+font-size: 18px;
+
+font-weight: 600;
+
+margin-bottom: 10px;
+
+color: #ffffff;
+
+}
+
+.video-meta {
+
+font-size: 14px;
+
+color: #a0aec0;
+
+}
+
+
+/* ==================== 视频播放器模态框 ==================== */
+
+.modal {
+
+display: none;
+
+position: fixed;
+
+top: 0;
+
+left: 0;
+
+width: 100%;
+
+height: 100%;
+
+background: rgba(0, 0, 0, 0.95);
+
+z-index: 2000;
+
+align-items: center;
+
+justify-content: center;
+
+opacity: 0;
+
+transition: opacity 0.3s ease;
+
+}
+
+.modal.active {
+
+display: flex;
+
+opacity: 1;
+
+}
+
+.modal-content {
+
+position: relative;
+
+width: 90%;
+
+max-width: 1200px;
+
+background: rgba(26, 31, 58, 0.95);
+
+border-radius: 16px;
+
+overflow: hidden;
+
+box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+
+animation: modalSlideIn 0.4s ease;
+
+}
+
+@keyframes modalSlideIn {
+
+from { transform: scale(0.9) translateY(50px); opacity: 0; }
+
+to { transform: scale(1) translateY(0); opacity: 1; }
+
+}
+
+.modal-header {
+
+padding: 20px 30px;
+
+background: rgba(10, 14, 39, 0.8);
+
+display: flex;
+
+justify-content: space-between;
+
+align-items: center;
+
+border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+}
+
+.modal-title {
+
+font-size: 20px;
+
+font-weight: 600;
+
+}
+
+.close-button {
+
+width: 35px;
+
+height: 35px;
+
+background: rgba(255, 255, 255, 0.1);
+
+border: none;
+
+border-radius: 50%;
+
+color: white;
+
+font-size: 24px;
+
+cursor: pointer;
+
+display: flex;
+
+align-items: center;
+
+justify-content: center;
+
+transition: all 0.3s ease;
+
+}
+
+.close-button:hover {
+
+background: rgba(255, 255, 255, 0.2);
+
+transform: rotate(90deg);
+
+}
+
+.video-player {
+
+width: 100%;
+
+max-height: 70vh;
+
+background: black;
+
+}
+
+
+/* ==================== 付款区域 ==================== */
+
+.payment-section {
+
+padding: 80px 20px;
+
+background: rgba(26, 31, 58, 0.4);
+
+border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+margin-top: 60px;
+
+}
+
+.payment-container {
+
+max-width: 600px;
+
+margin: 0 auto;
+
+text-align: center;
+
+}
+
+.payment-title {
+
+font-size: 32px;
+
+font-weight: 700;
+
+margin-bottom: 20px;
+
+background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+-webkit-background-clip: text;
+
+-webkit-text-fill-color: transparent;
+
+background-clip: text;
+
+}
+
+.payment-price {
+
+font-size: 48px;
+
+font-weight: 700;
+
+color: #667eea;
+
+margin-bottom: 10px;
+
+}
+
+.payment-period {
+
+font-size: 18px;
+
+color: #a0aec0;
+
+margin-bottom: 40px;
+
+}
+
+.payment-description {
+
+font-size: 16px;
+
+color: #cbd5e0;
+
+margin-bottom: 40px;
+
+line-height: 1.8;
+
+}
+
+.qr-code {
+
+max-width: 300px;
+
+width: 100%;
+
+height: auto;
+
+border-radius: 16px;
+
+box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+
+border: 3px solid rgba(102, 126, 234, 0.3);
+
+transition: all 0.3s ease;
+
+}
+
+.qr-code:hover {
+
+transform: scale(1.05);
+
+box-shadow: 0 15px 50px rgba(102, 126, 234, 0.4);
+
+}
+
+.payment-note {
+
+margin-top: 30px;
+
+font-size: 14px;
+
+color: #a0aec0;
+
+}
+
+
+/* ==================== 响应式设计 ==================== */
+
+@media (max-width: 768px) {
+
+.navbar {
+
+padding: 0 20px;
+
+}
+
+.logo {
+
+font-size: 24px;
+
+}
+
+.intro-title {
+
+font-size: 32px;
+
+}
+
+.intro-subtitle {
+
+font-size: 18px;
+
+}
+
+.intro-text {
+
+font-size: 16px;
+
+}
+
+.video-grid {
+
+grid-template-columns: 1fr;
+
+gap: 20px;
+
+}
+
+.payment-title {
+
+font-size: 24px;
+
+}
+
+.payment-price {
+
+font-size: 36px;
+
+}
+
+.modal-content {
+
+width: 95%;
+
+}
+
+}
+
+
+/* ==================== 滚动条样式 ==================== */
+
+::-webkit-scrollbar {
+
+width: 10px;
+
+}
+
+::-webkit-scrollbar-track {
+
+background: rgba(10, 14, 39, 0.5);
+
+}
+
+::-webkit-scrollbar-thumb {
+
+background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+border-radius: 5px;
+
+}
+
+::-webkit-scrollbar-thumb:hover {
+
+background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- 星空背景 -->
+
+<div class="starfield" id="starfield"></div>
+
+
+<!-- 导航栏 -->
+
+<nav class="navbar">
+
+<div class="logo">思</div>
+
+<div class="user-menu">
+
+<div class="user-avatar" id="userAvatar">
+
+<svg viewBox="0 0 24 24">
+
+<path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+
+</svg>
+
+</div>
+
+<!-- 主下拉菜单 -->
+
+<div class="dropdown" id="mainDropdown">
+
+<div class="dropdown-item" id="settingsBtn">⚙️ 设置</div>
+
+<!-- 设置子菜单 -->
+
+<div class="settings-menu" id="settingsMenu">
+
+<div class="settings-item">👤 个人</div>
+
+<div class="settings-item">📱 应用</div>
+
+<div class="settings-item">🏢 企业</div>
+
+<div class="settings-item">📚 学习</div>
+
+<div class="settings-item" id="devBtn">💻 开发</div>
+
+</div>
+
+</div>
+
+</div>
+
+</nav>
+
+
+<!-- 主容器 -->
+
+<div class="container">
+
+<!-- 简介界面 -->
+
+<section class="intro-section" id="introSection">
+
+<div class="intro-content">
+
+<h1 class="intro-title">【智慧成长，一站抵达】</h1>
+
+<p class="intro-subtitle">为3-15岁学习者打造的学术引擎</p>
+
+<p class="intro-text">
+
+从幼儿园的好奇探索到初三的思维飞跃，我们为每个关键成长阶段铺设无缝衔接的学术高速路。基于哈佛教育学团队研发的"认知发展地图"，系统智能规划超过5000小时结构化学习路径。AI动态诊断技术实时捕捉132个能力维度，实现个性化进阶。
+
+</p>
+
+<p class="intro-text">
+
+不止于题库，更构建沉浸式学习生态：AR实验室将抽象概念可视化，智能写作教练提供逐句润色，跨学科项目制学习培养解决真实问题的能力。每月更新的"全球素养模块"同步世界课堂，让孩子在本地化内容中建立国际视野。
+
+</p>
+
+<p class="intro-text">
+
+已助力17万学生实现平均37%的能力提升，92%的教师推荐作为课堂教学延伸。教育是系统性工程，我们以十年专注，让每一步成长都可测量、可优化、可抵达。
+
+</p>
+
+<p class="intro-text">
+
+开启专属学习规划，见证科学教育带来的根本性改变。
+
+</p>
+
+<button class="cta-button">立即开始学习之旅</button>
+
+</div>
+
+</section>
+
+
+<!-- 视频列表界面 -->
+
+<section class="video-section" id="videoSection">
+
+<div class="video-grid" id="videoGrid">
+
+<!-- 视频卡片将通过JavaScript动态生成 -->
+
+</div>
+
+</section>
+
+
+<!-- 付款区域 -->
+
+<section class="payment-section">
+
+<div class="payment-container">
+
+<h2 class="payment-title">开启全年学习计划</h2>
+
+<div class="payment-price">¥199</div>
+
+<div class="payment-period">/ 年</div>
+
+<p class="payment-description">
+
+解锁全部课程内容，享受个性化学习路径规划，<br>
+
+AI智能诊断，专业教师在线答疑，助力孩子全面成长
+
+</p>
+
+<img src="https://xg-1-179.github.io/Screenshot_20260119_221229.jpg" alt="支付二维码" class="qr-code" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+
+<p class="payment-note" style="display:none;">扫描上方二维码完成支付</p>
+
+<p class="payment-note">扫描二维码完成支付，即刻开启学习之旅</p>
+
+</div>
+
+</section>
+
+</div>
+
+
+<!-- 视频播放器模态框 -->
+
+<div class="modal" id="videoModal">
+
+<div class="modal-content">
+
+<div class="modal-header">
+
+<h3 class="modal-title" id="modalTitle">视频播放</h3>
+
+<button class="close-button" id="closeModal">&times;</button>
+
+</div>
+
+<video class="video-player" id="videoPlayer" controls>
+
+您的浏览器不支持视频播放。
+
+</video>
+
+</div>
+
+</div>
+
+
+<script>
+
+// ==================== 星空背景生成 ====================
+
+function createStarfield() {
+
+const starfield = document.getElementById('starfield');
+
+const starCount = 200;
+
+for (let i = 0; i < starCount; i++) {
+
+const star = document.createElement('div');
+
+star.className = 'star';
+
+const size = Math.random() * 3;
+
+star.style.width = size + 'px';
+
+star.style.height = size + 'px';
+
+star.style.left = Math.random() * 100 + '%';
+
+star.style.top = Math.random() * 100 + '%';
+
+star.style.animationDuration = (Math.random() * 3 + 2) + 's';
+
+star.style.animationDelay = Math.random() * 3 + 's';
+
+starfield.appendChild(star);
+
+}
+
+}
+
+
+// ==================== 视频数据 ====================
+
+const videos = [
+
+{ title: '旋转的定义与性质（第一部分）', url: 'https://xg-1-179.github.io/旋转的定义与性质_3961657698.mp4', category: '数学' },
+
+{ title: '旋转的定义与性质（第二部分）', url: 'https://xg-1-179.github.io/旋转的定义与性质_2195405287.mp4', category: '数学' },
+
+{ title: '九年级《沁园春》赏析', url: 'https://xg-1-179.github.io/九年级《沁园春_1437898283.mp4', category: '语文' },
+
+{ title: '一元二次方程定义（第一部分）', url: 'https://xg-1-179.github.io/一元二次方程定义_4257677794.mp4', category: '数学' },
+
+{ title: '一元二次方程定义（第二部分）', url: 'https://xg-1-179.github.io/一元二次方程定义_1653810699.mp4', category: '数学' }
+
+];
+
+
+// ==================== 生成视频卡片 ====================
+
+function createVideoCards() {
+
+const videoGrid = document.getElementById('videoGrid');
+
+videoGrid.innerHTML = '';
+
+videos.forEach((video, index) => {
+
+const card = document.createElement('div');
+
+card.className = 'video-card';
+
+card.innerHTML = `
+
+<div class="video-thumbnail">
+
+<div class="play-icon"></div>
+
+</div>
+
+<div class="video-info">
+
+<h3 class="video-title">${video.title}</h3>
+
+<p class="video-meta">${video.category} · 精品课程</p>
+
+</div>
+
+`;
+
+card.addEventListener('click', () => openVideoModal(video));
+
+videoGrid.appendChild(card);
+
+});
+
+}
+
+
+// ==================== 菜单交互（修复版） ====================
+
+const userAvatar = document.getElementById('userAvatar');
+
+const mainDropdown = document.getElementById('mainDropdown');
+
+const settingsBtn = document.getElementById('settingsBtn');
+
+const settingsMenu = document.getElementById('settingsMenu');
+
+const devBtn = document.getElementById('devBtn');
+
+const introSection = document.getElementById('introSection');
+
+const videoSection = document.getElementById('videoSection');
+
+let isVideoSectionActive = false;
+
+
+// 点击头像显示/隐藏主菜单
+
+userAvatar.addEventListener('click', (e) => {
+
+e.stopPropagation();
+
+const isActive = mainDropdown.classList.contains('active');
+
+mainDropdown.classList.toggle('active');
+
+if (!isActive) {
+
+settingsMenu.classList.remove('active');
+
+}
+
+});
+
+
+// 点击设置显示设置菜单（不关闭主菜单）
+
+settingsBtn.addEventListener('click', (e) => {
+
+e.stopPropagation();
+
+settingsMenu.classList.toggle('active');
+
+});
+
+
+// 阻止设置菜单内部点击事件冒泡
+
+settingsMenu.addEventListener('click', (e) => {
+
+e.stopPropagation();
+
+});
+
+
+// 阻止主菜单内部点击事件冒泡
+
+mainDropdown.addEventListener('click', (e) => {
+
+e.stopPropagation();
+
+});
+
+
+// 点击开发切换界面
+
+devBtn.addEventListener('click', (e) => {
+
+e.stopPropagation();
+
+isVideoSectionActive = !isVideoSectionActive;
+
+if (isVideoSectionActive) {
+
+introSection.classList.add('hidden');
+
+videoSection.classList.add('active');
+
+devBtn.classList.add('active');
+
+} else {
+
+videoSection.classList.remove('active');
+
+setTimeout(() => {
+
+introSection.classList.remove('hidden');
+
+}, 300);
+
+devBtn.classList.remove('active');
+
+}
+
+// 关闭所有菜单
+
+settingsMenu.classList.remove('active');
+
+mainDropdown.classList.remove('active');
+
+});
+
+
+// 点击页面其他地方关闭所有菜单
+
+document.addEventListener('click', (e) => {
+
+mainDropdown.classList.remove('active');
+
+settingsMenu.classList.remove('active');
+
+});
+
+
+// ==================== 视频播放器 ====================
+
+const videoModal = document.getElementById('videoModal');
+
+const videoPlayer = document.getElementById('videoPlayer');
+
+const modalTitle = document.getElementById('modalTitle');
+
+const closeModal = document.getElementById('closeModal');
+
+
+function openVideoModal(video) {
+
+modalTitle.textContent = video.title;
+
+videoPlayer.src = video.url;
+
+videoModal.classList.add('active');
+
+videoPlayer.play();
+
+}
+
+
+function closeVideoModal() {
+
+videoModal.classList.remove('active');
+
+videoPlayer.pause();
+
+videoPlayer.src = '';
+
+}
+
+
+closeModal.addEventListener('click', closeVideoModal);
+
+videoModal.addEventListener('click', (e) => {
+
+if (e.target === videoModal) {
+
+closeVideoModal();
+
+}
+
+});
+
+
+// ESC键关闭模态框
+
+document.addEventListener('keydown', (e) => {
+
+if (e.key === 'Escape' && videoModal.classList.contains('active')) {
+
+closeVideoModal();
+
+}
+
+});
+
+
+// ==================== 初始化 ====================
+
+window.addEventListener('DOMContentLoaded', () => {
+
+createStarfield();
+
+createVideoCards();
+
+});
+
+
+// ==================== CTA按钮交互 ====================
+
+document.querySelector('.cta-button').addEventListener('click', () => {
+
+// 这里可以补充CTA按钮的点击逻辑（比如跳转到视频列表）
+
+introSection.classList.add('hidden');
+
+videoSection.classList.add('active');
+
+});
+
+</script>
+
+</body>
+
+</html>
+
+
